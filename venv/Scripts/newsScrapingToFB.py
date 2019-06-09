@@ -58,7 +58,7 @@ def scrapeToFB():
     except:
         print("timeout error ")
         driver.get("https://www.google.com/search?q=site:www.theverge.com+game+%7C+technology&client=firefox-b-d&tbas=0&tbm=nws&source=lnt&tbs=sbd:1&sa=X&ved=0ahUKEwiTh9Tax9riAhW4DmMBHR2TB1wQpwUIIA&biw=1360&bih=654&dpr=1")
-
+    articledesc = driver.find_element(By.CLASS_NAME, "st")
     firstpost = driver.find_element(By.CSS_SELECTOR, ".g > div > a")
     firstpost.click()
     articletitle = driver.find_element(By.CLASS_NAME, 'c-page-title')
@@ -72,12 +72,14 @@ def scrapeToFB():
         try:
             print("attempting to translate")
             translate = translator.translate(articletitle.text, dest='ar')
+            translate2 = translator.translate(articledesc.text, dest="ar")
         except:
             print("error")
             translate = translator.translate(articletitle.text, dest='ar')
+            translate2 = translator.translate(articledesc.text, dest="ar")
 
         print("translate succeeded")
-        fbpost(articleurl + "\n" + translate.text)
+        fbpost(articleurl + "\n" + translate.text + "\n" + translate2.text)
 
     else:
         print("refreshing")
